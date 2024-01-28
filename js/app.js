@@ -1,3 +1,5 @@
+const elSatelliteVideo = document.getElementById("satellite-video");
+
 const Pannable = (elViewport) => {
   // video dimensions: 6122 x 2866
   // MaxX = 6122/2 - 241 - (1280/2) = 2180
@@ -7,7 +9,8 @@ const Pannable = (elViewport) => {
 
   const elCanvas = elViewport.firstElementChild;
   const start = {x: 0, y: 0};
-  const offset = {x: 1898, y: 816}; // The transform offset (from center)
+  const offsetStart = {x: 1898, y: 816};
+  const offset = {x: offsetStart.x, y: offsetStart.y}; // The transform offset (from center)
   const offsetLimits = {MaxX: 2180, MinX: -2128, MaxY: 816, MinY: -586};
 
   const elLat = document.getElementById("lat");
@@ -31,6 +34,14 @@ const Pannable = (elViewport) => {
     offset.x = ev.clientX - start.x;
     offset.y = ev.clientY - start.y;
 
+    panUpdate();
+  };
+
+  const panEnd = () => {
+    isPan = false;
+  };
+
+  const panUpdate = () => {
     // keep the offset within the limits
     if (offset.x < offsetLimits.MinX) offset.x = offsetLimits.MinX;
     if (offset.x > offsetLimits.MaxX) offset.x = offsetLimits.MaxX;
@@ -41,24 +52,20 @@ const Pannable = (elViewport) => {
 
     elLat.textContent = parseFloat((coordsStart.lat - offset.y * latPerPixel).toFixed(6));
     elLon.textContent = parseFloat((coordsStart.lon + offset.x * lonPerPixel).toFixed(6));
-    console.log(offset.x, offset.y);
-  };
-
-  const panEnd = () => {
-    isPan = false;
-  };
+  }
 
   elViewport.addEventListener("pointerdown", panStart);
   addEventListener("pointermove", panMove);
   addEventListener("pointerup", panEnd);
+
+  document.getElementById("replay-button").addEventListener("click", () => {
+    elSatelliteVideo.currentTime = 0;
+    offset.x = offsetStart.x;
+    offset.y = offsetStart.y;
+    panUpdate();
+    elSatelliteVideo.play();
+  });
 };
 
-const elSatelliteVideo = document.getElementById("satellite-video");
-
-// when #replay-button is clicked, play #satellite-video video from the beginning
-document.getElementById("replay-button").addEventListener("click", () => {
-  elSatelliteVideo.currentTime = 0;
-  elSatelliteVideo.play();
-});
 
 document.querySelectorAll(".viewport").forEach(Pannable);
