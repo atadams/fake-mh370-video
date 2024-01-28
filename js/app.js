@@ -58,7 +58,8 @@ const Pannable = (elViewport) => {
   addEventListener("pointermove", panMove);
   addEventListener("pointerup", panEnd);
 
-  document.getElementById("replay-button").addEventListener("click", () => {
+  document.getElementById("replay-button").addEventListener("click", (ev) => {
+    ev.preventDefault();
     elSatelliteVideo.currentTime = 0;
     offset.x = offsetStart.x;
     offset.y = offsetStart.y;
