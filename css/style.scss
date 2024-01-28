@@ -1,0 +1,67 @@
+@import "scss/functions";
+@import "variables";
+@import "scss/bootstrap";
+
+body {
+  padding: 2rem 4rem;
+}
+
+#video-container {
+  width: 1280px;
+  height: 720px;
+  overflow: hidden;
+  display: block;
+  margin: 30px auto;
+}
+
+.video-wrapper {
+  width: 1280px;
+  height: 720px;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+}
+
+#satellite-video {
+  z-index: 100;
+}
+
+#coordinates {
+  display: block;
+  position: relative;
+  bottom: 9px;
+  height: 9px;
+  overflow: hidden;
+  left: -6px;
+  z-index: 200;
+  color: hsla(39, 66%, 71%, 1.00);
+  font-size: 16px;
+  line-height: 1;
+  font-family: 'Courier Prime', monospace;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px hsla(0, 0%, 0%, 0.5);
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+}
+
+#video-canvas {
+  display:block;
+  margin:1em auto;
+  background:#fff;
+  border:1px solid #ccc;
+}
+
+.viewport {
+  width: 1280px;
+  height: 720px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: none; /* Prevent pointermove default panning */
+  z-index: 50;
+}
+
+/*.viewport>* {*/
+/*  max-width: 500px;*/
+/*}*/

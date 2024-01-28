@@ -53,4 +53,12 @@ const Pannable = (elViewport) => {
   addEventListener("pointerup", panEnd);
 };
 
+const elSatelliteVideo = document.getElementById("satellite-video");
+
+// when #replay-button is clicked, play #satellite-video video from the beginning
+document.getElementById("replay-button").addEventListener("click", () => {
+  elSatelliteVideo.currentTime = 0;
+  elSatelliteVideo.play();
+});
+
 document.querySelectorAll(".viewport").forEach(Pannable);
